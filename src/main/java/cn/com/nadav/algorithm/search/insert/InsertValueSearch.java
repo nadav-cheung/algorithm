@@ -13,6 +13,33 @@ public class InsertValueSearch {
         return search(nums, 0, nums.length, target);
     }
 
+    /**
+     * 插值查找
+     *
+     * @param arr    有序数组
+     * @param low    搜索的低索引
+     * @param high   搜索的高索引
+     * @param target 要查找的目标值
+     * @return 目标值的索引或-1（如果不存在）
+     */
+    public static int interpolationSearch(int[] arr, int low, int high, int target) {
+        if (low <= high && target >= arr[low] && target <= arr[high]) {
+            // 计算插值位置
+            int pos = low + ((target - arr[low]) * (high - low)) / (arr[high] - arr[low]);
+
+            if (arr[pos] == target) {
+                return pos;
+            }
+
+            if (arr[pos] < target) {
+                return interpolationSearch(arr, pos + 1, high, target);
+            } else {
+                return interpolationSearch(arr, low, pos - 1, target);
+            }
+        }
+        return -1;
+    }
+
 
     private static int search(int[] nums, int l, int r, int target) {
         // 越界条件
