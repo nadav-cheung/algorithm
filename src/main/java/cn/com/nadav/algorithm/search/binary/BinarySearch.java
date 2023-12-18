@@ -5,101 +5,6 @@ package cn.com.nadav.algorithm.search.binary;
  * 迭代算法 iteration
  * 二分查找及左边界和右边界查找
  *
- * Java binary search left bound refers to finding the first occurrence of a target value in a sorted array. This can be done using binary search, which has a time complexity of O(log n). Here's an example implementation:
- *
- * ```java
- * public class BinarySearchLeftBound {
- *     public static void main(String[] args) {
- *         int[] arr = {1, 3, 4, 4, 6, 8};
- *         int target = 4;
- *
- *         System.out.println("Left Bound: " + findLeftBound(arr, target));
- *     }
- *
- *     private static int findLeftBound(int[] arr, int target) {
- *         if (arr == null || arr.length == 0) return -1;
- *
- *          // Perform binary search
- *          int left = 0;
- *          int right = arr.length - 1;
- *
- *          while (left <= right) {
- *              int mid = left + (right - left) /2;
- *
- *              if (arr[mid] < target)
- *                  left = mid +1;
- *
- *              else
- *                  right=mid-1;
- *           }
- *
- *           // Check if we found the desired number and 'left' is within bounds.
- *           if(left < arr.length && arr[left] == target)
- *               return left;
- *
- *           return -1; // Target not found in the array
- *      }
- * }
- * ```
- *
- * In this example code snippet:
- * - The `findLeftBound` method takes an integer array `arr` and an integer `target`.
- * - It checks edge cases where there are no elements in the array.
- * - Then it performs a standard binary search with some modifications:
- *    * When comparing values at index `mid`, instead of checking for equality (`arr[mid] == target`), we only check for less than (`arr[mid] < target`) or greater than or equal to (`else`). This ensures that when our loop ends and we didn't find exact match yet but have narrowed down range `[left,right]`, 'left' points to first occurrence of our desired number.
- *    * After exiting from loop ,we need to make sure that 'left' is still within bounds and pointing at correct element before returning its index.
- *
- * This will give you the index of the first occurrence (the "left bound") of your desired number. If it doesn't exist in your input array then `-1` will be returned.
- *
- *
- *
- *
- * Java binary search right bound refers to finding the last occurrence of a target value in a sorted array. This can be done using binary search, which has a time complexity of O(log n). Here's an example implementation:
- *
- * ```java
- * public class BinarySearchRightBound {
- *     public static void main(String[] args) {
- *         int[] arr = {1, 3, 4, 4, 6, 8};
- *         int target = 4;
- *
- *         System.out.println("Right Bound: " + findRightBound(arr, target));
- *     }
- *
- *     private static int findRightBound(int[] arr, int target) {
- *         if (arr == null || arr.length == 0) return -1;
- *
- *          // Perform binary search
- *          int left = 0;
- *          int right = arr.length - 1;
- *
- *          while (left <= right) {
- *              int mid = left + (right - left) /2;
- *
- *              if (arr[mid] > target)
- *                  right=mid-1;
- *
- *              else
- *                  left=mid+1;
- *           }
- *
- *           // Check if we found the desired number and 'right' is within bounds.
- *           if(right >=0 && arr[right] == target)
- *               return right;
- *
- *           return -1; // Target not found in the array
- *      }
- * }
- * ```
- *
- * In this example code snippet:
- * - The `findRightBound` method takes an integer array `arr` and an integer `target`.
- * - It checks edge cases where there are no elements in the array.
- * - Then it performs a standard binary search with some modifications:
- *    * When comparing values at index `mid`, instead of checking for equality (`arr[mid] == target`), we only check for greater than (`arr[mid] > target`) or less than or equal to (`else`). This ensures that when our loop ends and we didn't find exact match yet but have narrowed down range `[left,right]`, 'right' points to last occurrence of our desired number.
- *    * After exiting from loop ,we need to make sure that 'right' is still within bounds and pointing at correct element before returning its index.
- *
- * This will give you the index of the last occurrence (the "right bound") of your desired number. If it doesn't exist in your input array then `-1` will be returned.
- *
  * @author nadav cheung
  * @date 8/16/23
  */
@@ -107,22 +12,30 @@ public class BinarySearch {
 
 
     /**
+     * 二分搜索（又称二分查找）是一种在有序数组中查找特定元素的算法
+     *
      * @param array  有序数组
      * @param target 目标数据
-     * @return array index
+     * @return array index 不存在则返回-1
      */
     public static int recursionSearch(int[] array, int target) {
         return recursionSearch(array, 0, array.length, target);
     }
 
 
+    /**
+     * @param array  数组
+     * @param l      左边界
+     * @param r      右边界 初始化时等于数组长度  array[l,r)左闭右开区间
+     * @param target
+     * @return
+     */
     private static int recursionSearch(int[] array, int l, int r, int target) {
-        // array[l,r) 在左闭右开区间中寻找 target
 
+        // array[l,r) 在左闭右开区间中寻找 target
         if (l >= r) {
             return -1;
         }
-
         int mid = l + (r - l) / 2;
 
         if (array[mid] == target) {
@@ -137,6 +50,7 @@ public class BinarySearch {
         return recursionSearch(array, l, mid, target);
     }
 
+    // Java范型接口
     public static <E extends Comparable<? super E>> int recursionSearch(E[] array, E target) {
         return recursionSearch(array, 0, array.length, target);
     }
@@ -161,6 +75,9 @@ public class BinarySearch {
     }
 
 
+    /**
+     * 迭代实现
+     */
     public static int iterationSearch(int[] array, int target) {
         int l = 0;
         int r = array.length;
@@ -201,7 +118,10 @@ public class BinarySearch {
 
 
     /**
-     * 左边界问题      288889｜8
+     * Java binary search left bound refers to finding the first occurrence of a target value in a sorted array.
+     * This can be done using binary search, which has a time complexity of O(log n). Here's an example implementation:
+     * 在一个可重复的有序数组中寻找第一次出现的元素
+     * 不断向左边逼近
      *
      * @param nums
      * @param target
@@ -211,30 +131,75 @@ public class BinarySearch {
         if (nums == null || nums.length == 0) {
             return -1;
         }
+
         int left = 0;
         int right = nums.length;
 
-        // nums[left,right)
+        // nums[left,right) 左闭右开区间查询
         while (left < right) {
             int mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                right = mid;
-            }
+
+            // 此时 right 可能是答案，也肯不是
+//            if (nums[mid] == target) {
+//                right = mid;
+//            }
+//            if (nums[mid] < target) {
+//                left = mid + 1;
+//            }
+//            if (nums[mid] > target) {
+//                right = mid;
+//            }
+
             if (nums[mid] < target) {
                 left = mid + 1;
-            }
-            if (nums[mid] > target) {
+            } else {
                 right = mid;
             }
+
         }
 
+        //  // Check if we found the desired number and 'left' is within bounds. 越界问题分析
         if (left >= nums.length || nums[left] != target) {
             return -1;
         }
         return left;
     }
 
+    private static int findLeftBound(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
 
+        // Perform binary search
+        int left = 0;
+        int right = nums.length - 1;
+
+        // nums[l,r] 左闭右闭区间
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+
+        // Check if we found the desired number and 'left' is within bounds.
+        if (left < nums.length && nums[left] == target)
+            return left;
+
+        return -1; // Target not found in the array
+    }
+
+
+    /**
+     * * 在一个可重复的有序数组中寻找第一次出现的元素
+     * * 不断向左边逼近
+     * * 左边界问题      288889｜8
+     *
+     * @param nums
+     * @param target
+     * @param <E>
+     * @return
+     */
     public static <E extends Comparable<? super E>> int leftBound(E[] nums, E target) {
         if (nums.length == 0) {
             return -1;
@@ -262,16 +227,24 @@ public class BinarySearch {
         return l;
     }
 
+    /**
+     * * Java binary search right bound refers to finding the last occurrence of a target value in a sorted array.
+     * This can be done using binary search, which has a time complexity of O(log n). Here's an example implementation:
+     *
+     * @param data
+     * @param target
+     * @return
+     */
 
     public static int rightBound(int[] data, int target) {
-        if (data.length == 0) {
+        if (data == null || data.length == 0) {
             return -1;
         }
 
         int l = 0;
         int r = data.length;
 
-        // data[l,r)
+        // data[l,r) 左闭右开区间
         while (l < r) {
             int mid = l + (r - l) / 2;
             if (data[mid] == target) {
@@ -284,10 +257,38 @@ public class BinarySearch {
                 r = mid;
             }
         }
+
+        // l>=r 跳出条件
+
         if (r - 1 >= 0 && data[r - 1] == target) {
             return r - 1;
         }
         return -1;
+    }
+
+
+    private static int findRightBound(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
+
+        // Perform binary search
+        int left = 0;
+        int right = nums.length - 1;
+
+        // nums[l,r] 左闭右闭区间
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] > target)
+                right = mid - 1;
+            else
+                left = mid + 1;
+        }
+
+        // Check if we found the desired number and 'right' is within bounds.
+        if (right >= 0 && nums[right] == target)
+            return right;
+
+        return -1; // Target not found in the array
     }
 
 
