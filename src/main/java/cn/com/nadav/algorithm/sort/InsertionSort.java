@@ -45,4 +45,31 @@ public class InsertionSort {
             nums[j] = ret;
         }
     }
+
+
+    public static void sort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int key = arr[i];
+            int j = i - 1;
+
+            // 将大于key的元素向后移动
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            // 插入key
+            arr[j + 1] = key;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {12, 11, 13, 5, 6};
+        sort(arr);
+        System.out.println("排序后的数组: ");
+        for (int i : arr) {
+            System.out.print(i + " ");
+        }
+    }
+
+
 }
