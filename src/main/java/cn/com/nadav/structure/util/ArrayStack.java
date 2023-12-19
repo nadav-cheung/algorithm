@@ -5,22 +5,19 @@ import java.util.Arrays;
 public class ArrayStack<E> implements Stack<E> {
 
 
-    transient Object[] elements;
-
-    /**
-     * 表示栈中元素的数量
-     */
-    protected int elementCount;
-
     /**
      * 默认容量
      */
     private static final int DEFAULT_CAPACITY = 16;
-
     /**
      * 数组允许分配的最大值
      */
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+    /**
+     * 表示栈中元素的数量
+     */
+    protected int elementCount;
+    transient Object[] elements;
 
 
     /**
@@ -38,11 +35,29 @@ public class ArrayStack<E> implements Stack<E> {
         elements = new Object[Math.max(numElements, DEFAULT_CAPACITY)];
     }
 
+    /**
+     * 可以申请的最大内存
+     */
+    private static int hugeCapacity(int minCapacity) {
+        if (minCapacity < 0)
+            throw new OutOfMemoryError();
+        return (minCapacity > MAX_ARRAY_SIZE) ?
+                Integer.MAX_VALUE :
+                MAX_ARRAY_SIZE;
+    }
+
+    /**
+     * 返回数组索引 i 处的元素。这是对泛型的轻微滥用，已被 javac 接受。
+     */
+    @SuppressWarnings("unchecked")
+    static final <E> E elementAt(Object[] es, int i) {
+        return (E) es[i];
+    }
+
     @Override
     public boolean empty() {
         return size() == 0;
     }
-
 
     @Override
     public int size() {
@@ -92,18 +107,6 @@ public class ArrayStack<E> implements Stack<E> {
         elements = Arrays.copyOf(elements, newCapacity);
     }
 
-    /**
-     * 可以申请的最大内存
-     */
-    private static int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0)
-            throw new OutOfMemoryError();
-        return (minCapacity > MAX_ARRAY_SIZE) ?
-                Integer.MAX_VALUE :
-                MAX_ARRAY_SIZE;
-    }
-
-
     @Override
     public E pop() {
         int len = size();
@@ -123,13 +126,5 @@ public class ArrayStack<E> implements Stack<E> {
             return null;
         }
         return elementAt(elements, len - 1);
-    }
-
-    /**
-     * 返回数组索引 i 处的元素。这是对泛型的轻微滥用，已被 javac 接受。
-     */
-    @SuppressWarnings("unchecked")
-    static final <E> E elementAt(Object[] es, int i) {
-        return (E) es[i];
     }
 }

@@ -12,14 +12,11 @@ import java.util.Queue;
  */
 public class SimpleMinHeap<E extends Comparable<? super E>> {
 
-    //用来存放数据
-    private Object[] elementData;
-
-
     // 1+2+4+8
     private static final int DEFAULT_INITIAL_CAPACITY = 15;
-
     int size = 0;
+    //用来存放数据
+    private Object[] elementData;
 
 
     public SimpleMinHeap() {
@@ -35,25 +32,6 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
     public SimpleMinHeap(E[] data) {
         initFromArray(data);
     }
-
-    private void initFromArray(E[] data) {
-        initElementsFromArray(data);
-        heapify();
-    }
-
-
-    /**
-     * Establishes the heap
-     */
-    @SuppressWarnings("unchecked")
-    private void heapify() {
-        final Object[] es = elementData;
-        int n = size;
-        int i = (n >>> 1) - 1;
-        for (; i >= 0; i--)
-            siftDownComparable(i, (E) es[i], es, n);
-    }
-
 
     /**
      * 在位置 k 处插入项 x，通过将 x 沿着树重复降级直到它小于或等于其子项或者是叶子来保持堆不变性。
@@ -88,6 +66,41 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
         es[k] = key;
     }
 
+    // Ensures that elementData[0] exists, helping peek() and poll().
+    private static Object[] ensureNonEmpty(Object[] es) {
+        return (es.length > 0) ? es : new Object[1];
+    }
+
+    private static <T> void siftUpComparable(int k, T x, Object[] es) {
+        Comparable<? super T> key = (Comparable<? super T>) x;
+        while (k > 0) {
+            int parent = (k - 1) >>> 1;
+            Object e = es[parent];
+            if (key.compareTo((T) e) >= 0)
+                break;
+            es[k] = e;
+            k = parent;
+        }
+        es[k] = key;
+    }
+
+    private void initFromArray(E[] data) {
+        initElementsFromArray(data);
+        heapify();
+    }
+
+    /**
+     * Establishes the heap
+     */
+    @SuppressWarnings("unchecked")
+    private void heapify() {
+        final Object[] es = elementData;
+        int n = size;
+        int i = (n >>> 1) - 1;
+        for (; i >= 0; i--)
+            siftDownComparable(i, (E) es[i], es, n);
+    }
+
     public E peek() {
         return (E) elementData[0];
     }
@@ -111,7 +124,6 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
         return result;
     }
 
-
     /**
      * 初始化堆的内存
      *
@@ -126,11 +138,6 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
                     throw new NullPointerException();
         this.elementData = ensureNonEmpty(es);
         this.size = len;
-    }
-
-    // Ensures that elementData[0] exists, helping peek() and poll().
-    private static Object[] ensureNonEmpty(Object[] es) {
-        return (es.length > 0) ? es : new Object[1];
     }
 
     public int size() {
@@ -176,7 +183,6 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
 
-
     /**
      * 上浮操作
      * 在位置 k 处插入项 x，通过将 x 沿树向上提升直到它大于或等于其父项，或者是根，来保持堆不变性。
@@ -184,19 +190,6 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
      */
     private void siftUp(int k, E x) {
         siftUpComparable(k, x, elementData);
-    }
-
-    private static <T> void siftUpComparable(int k, T x, Object[] es) {
-        Comparable<? super T> key = (Comparable<? super T>) x;
-        while (k > 0) {
-            int parent = (k - 1) >>> 1;
-            Object e = es[parent];
-            if (key.compareTo((T) e) >= 0)
-                break;
-            es[k] = e;
-            k = parent;
-        }
-        es[k] = key;
     }
 
 

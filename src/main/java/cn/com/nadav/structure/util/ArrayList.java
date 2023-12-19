@@ -60,17 +60,36 @@ public class ArrayList<E> implements List<E> {
         this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
 
+    /**
+     * 计算容量 选择默认容量和所需容量中的较大者
+     */
+    private static int calculateCapacity(Object[] elementData, int minCapacity) {
+        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
+            return Math.max(DEFAULT_CAPACITY, minCapacity);
+        }
+        return minCapacity;
+    }
+
+    /**
+     * 可以申请的最大内存
+     */
+    private static int hugeCapacity(int minCapacity) {
+        if (minCapacity < 0)
+            throw new OutOfMemoryError();
+        return (minCapacity > MAX_ARRAY_SIZE) ?
+                Integer.MAX_VALUE :
+                MAX_ARRAY_SIZE;
+    }
+
     @Override
     public int size() {
         return size;
     }
 
-
     @Override
     public boolean empty() {
         return size == 0;
     }
-
 
     @Override
     public boolean contains(Object o) {
@@ -96,7 +115,6 @@ public class ArrayList<E> implements List<E> {
         // 返回删除元素
         return oldValue;
     }
-
 
     @Override
     public int indexOf(Object o) {
@@ -149,7 +167,6 @@ public class ArrayList<E> implements List<E> {
         return oldValue;
     }
 
-
     private void rangeCheck(int index) {
         if (index >= size)
             throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
@@ -159,7 +176,6 @@ public class ArrayList<E> implements List<E> {
         return "Index: " + index + ", Size: " + size;
     }
 
-
     @Override
     public boolean add(E e) {
         // 确保申请的底层数组的容量可以存入当前这个元素
@@ -168,7 +184,6 @@ public class ArrayList<E> implements List<E> {
         elementData[size++] = e;
         return true;
     }
-
 
     @Override
     public void add(int index, E element) {
@@ -192,7 +207,6 @@ public class ArrayList<E> implements List<E> {
             throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
     }
 
-
     /**
      * 确保底层数组的容量是大于当前需要的最小容量
      * 如果容量不够就进行扩容
@@ -204,17 +218,6 @@ public class ArrayList<E> implements List<E> {
     }
 
     /**
-     * 计算容量 选择默认容量和所需容量中的较大者
-     */
-    private static int calculateCapacity(Object[] elementData, int minCapacity) {
-        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
-            return Math.max(DEFAULT_CAPACITY, minCapacity);
-        }
-        return minCapacity;
-    }
-
-
-    /**
      * 判断是否需要扩容
      */
     private void ensureExplicitCapacity(int minCapacity) {
@@ -222,7 +225,6 @@ public class ArrayList<E> implements List<E> {
         if (minCapacity - elementData.length > 0)
             grow(minCapacity);
     }
-
 
     /**
      * 扩容
@@ -244,19 +246,6 @@ public class ArrayList<E> implements List<E> {
         // 申请一个新的数组 数组大小为 newCapacity  并将原来数组的中数据拷贝到新数组
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
-
-
-    /**
-     * 可以申请的最大内存
-     */
-    private static int hugeCapacity(int minCapacity) {
-        if (minCapacity < 0)
-            throw new OutOfMemoryError();
-        return (minCapacity > MAX_ARRAY_SIZE) ?
-                Integer.MAX_VALUE :
-                MAX_ARRAY_SIZE;
-    }
-
 
     public boolean remove(Object o) {
         final Object[] es = elementData;

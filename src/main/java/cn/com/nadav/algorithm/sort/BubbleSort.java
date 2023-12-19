@@ -2,7 +2,6 @@ package cn.com.nadav.algorithm.sort;
 
 public class BubbleSort {
 
-
     /**
      * 宏观前提  数组左闭右开
      * i 表示进行的第i轮排序
@@ -46,6 +45,7 @@ public class BubbleSort {
             }
         }
     }
+
     private static <E extends Comparable<? super E>> void swap(E[] nums, int low, int high) {
         E temp = nums[low];
         nums[low] = nums[high];

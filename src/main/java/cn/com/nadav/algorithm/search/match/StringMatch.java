@@ -77,7 +77,7 @@ public class StringMatch {
         int[] lps = new int[pattern.length()];
         lps[0] = 0;
 
-        int len = 0;
+        int len = 0; // 最长公共前缀和后缀的长度
         int i = 1;
 
         while (i < pattern.length()) {
@@ -98,6 +98,28 @@ public class StringMatch {
             }
         }
         return lps;
+    }
+
+    public static int[] buildPartialMatchTable(String pattern) {
+        int patternLength = pattern.length();
+        int[] table = new int[patternLength];
+        int length = 0; // 最长公共前缀和后缀的长度
+
+        table[0] = 0; // 第一个元素总是0
+
+        for (int i = 1; i < patternLength; i++) {
+            while (length > 0 && pattern.charAt(length) != pattern.charAt(i)) {
+                length = table[length - 1];
+            }
+
+            if (pattern.charAt(length) == pattern.charAt(i)) {
+                length++;
+            }
+
+            table[i] = length;
+        }
+
+        return table;
     }
 
 

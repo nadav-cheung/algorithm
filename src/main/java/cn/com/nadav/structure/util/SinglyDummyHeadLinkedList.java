@@ -6,24 +6,10 @@ package cn.com.nadav.structure.util;
 public class SinglyDummyHeadLinkedList<E> implements List<E> {
 
     /**
-     * 单向节点
-     */
-    static class Node<E> {
-        E item;
-        Node<E> next;
-
-        Node(E element, Node<E> next) {
-            this.item = element;
-            this.next = next;
-        }
-    }
-
-    /**
      * 虚拟头节点
      */
     transient Node<E> dummyHead;
     transient int size = 0;
-
     public SinglyDummyHeadLinkedList() {
         this.dummyHead = new Node<>(null, null);
     }
@@ -33,7 +19,6 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
         addLast(e);
         return true;
     }
-
 
     @Override
     public int indexOf(E e) {
@@ -97,7 +82,6 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
         return size() == 0;
     }
 
-
     public void addFist(E e) {
         add(0, e);
     }
@@ -140,7 +124,6 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
         return node(index).item;
     }
 
-
     /**
      * Returns the (non-null) Node at the specified element index.
      */
@@ -170,11 +153,9 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
         return get(0);
     }
 
-
     public E getLast() {
         return get(size - 1);
     }
-
 
     public E set(int index, E item) {
         checkElementIndex(index);
@@ -187,7 +168,6 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
     public boolean contains(E item) {
         return indexOf(item) >= 0;
     }
-
 
     public E remove(int index) {
         checkElementIndex(index);
@@ -207,7 +187,6 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
         return delNode.item;
     }
 
-
     public E removeFist() {
         return remove(0);
     }
@@ -215,7 +194,6 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
     public E removeLast() {
         return remove(size - 1);
     }
-
 
     public void removeElement(E e) {
 
@@ -253,6 +231,19 @@ public class SinglyDummyHeadLinkedList<E> implements List<E> {
             Node<E> delNode = prev.next;
             prev.next = delNode.next;
             delNode.next = null;
+        }
+    }
+
+    /**
+     * 单向节点
+     */
+    static class Node<E> {
+        E item;
+        Node<E> next;
+
+        Node(E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
         }
     }
 

@@ -5,31 +5,27 @@ import java.util.Arrays;
 public class ArrayQueue<E> implements Queue<E> {
 
     /**
-     * 使用循环队列的抽象概念
-     * front  == tail 队列为空
-     * tail + 1 == front 队列满
-     */
-    transient Object[] elements;
-
-    /**
-     * 队列头部元素的索引（将通过remove()或pop()删除的元素）；
-     * 或任意数字 0 <= head < elements.length 等于 tail 如果队列为空。
-     */
-    transient int head;
-
-    /**
-     * 下一个元素将添加到队列尾部的索引（通过 addLast(E)、add(E) 或 push(E)）；
-     * elements[tail] 始终为空。
-     */
-    transient int tail;
-
-
-    /**
      * 要分配的数组的最大大小。
      * 一些虚拟机在数组中保留一些头字。尝试分配更大的数组可能会导致 OutOfMemoryError：
      * 请求的数组大小超出 VM 限制
      */
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+    /**
+     * 使用循环队列的抽象概念
+     * front  == tail 队列为空
+     * tail + 1 == front 队列满
+     */
+    transient Object[] elements;
+    /**
+     * 队列头部元素的索引（将通过remove()或pop()删除的元素）；
+     * 或任意数字 0 <= head < elements.length 等于 tail 如果队列为空。
+     */
+    transient int head;
+    /**
+     * 下一个元素将添加到队列尾部的索引（通过 addLast(E)、add(E) 或 push(E)）；
+     * elements[tail] 始终为空。
+     */
+    transient int tail;
 
 
     /**
@@ -50,14 +46,6 @@ public class ArrayQueue<E> implements Queue<E> {
                                 numElements + 1];
     }
 
-    /**
-     * 返回此队列中的元素数量。
-     */
-    @Override
-    public int size() {
-        return sub(tail, head, elements.length);
-    }
-
     static final int sub(int i, int j, int modulus) {
 
         /**
@@ -72,11 +60,44 @@ public class ArrayQueue<E> implements Queue<E> {
         return i;
     }
 
+    /**
+     * 循环队列计算下标
+     */
+    static final int inc(int i, int modulus) {
+        if (++i >= modulus) {
+            i = 0;
+        }
+        return i;
+    }
+
+    /**
+     * 返回数组索引 i 处的元素。这是对泛型的轻微滥用，已被 javac 接受。
+     */
+    @SuppressWarnings("unchecked")
+    static final <E> E elementAt(Object[] es, int i) {
+        return (E) es[i];
+    }
+
+    /**
+     * 循环队列前移计算下标
+     */
+    static final int dec(int i, int modulus) {
+        if (--i < 0) i = modulus - 1;
+        return i;
+    }
+
+    /**
+     * 返回此队列中的元素数量。
+     */
+    @Override
+    public int size() {
+        return sub(tail, head, elements.length);
+    }
+
     @Override
     public boolean empty() {
         return head == tail;
     }
-
 
     public boolean offer(E e) {
         return offerLast(e);
@@ -101,17 +122,6 @@ public class ArrayQueue<E> implements Queue<E> {
         if (head == (tail = inc(tail, es.length)))
             // 数组扩容
             grow(1);
-    }
-
-
-    /**
-     * 循环队列计算下标
-     */
-    static final int inc(int i, int modulus) {
-        if (++i >= modulus) {
-            i = 0;
-        }
-        return i;
     }
 
     /**
@@ -188,15 +198,6 @@ public class ArrayQueue<E> implements Queue<E> {
         return e;
     }
 
-    /**
-     * 返回数组索引 i 处的元素。这是对泛型的轻微滥用，已被 javac 接受。
-     */
-    @SuppressWarnings("unchecked")
-    static final <E> E elementAt(Object[] es, int i) {
-        return (E) es[i];
-    }
-
-
     public E peek() {
         return peekFirst();
     }
@@ -214,14 +215,6 @@ public class ArrayQueue<E> implements Queue<E> {
         // 判断是否需要扩容
         if (head == tail)
             grow(1);
-    }
-
-    /**
-     * 循环队列前移计算下标
-     */
-    static final int dec(int i, int modulus) {
-        if (--i < 0) i = modulus - 1;
-        return i;
     }
 
 }

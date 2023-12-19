@@ -6,29 +6,13 @@ package cn.com.nadav.structure.util;
 public class SinglyLinkedList<E> implements List<E> {
 
     /**
-     * 单向节点
-     */
-    static class Node<E> {
-        E item;
-        Node<E> next;
-
-        Node(E element, Node<E> next) {
-            this.item = element;
-            this.next = next;
-        }
-    }
-
-    /**
      * 虚拟头节点
      */
     transient Node<E> head;
     transient int size = 0;
-
-
     public SinglyLinkedList() {
 
     }
-
 
     @Override
     public void add(int index, E e) {
@@ -44,6 +28,19 @@ public class SinglyLinkedList<E> implements List<E> {
 
         node.next = add(node.next, index - 1, e);
         return node;
+    }
+
+    /**
+     * 单向节点
+     */
+    static class Node<E> {
+        E item;
+        Node<E> next;
+
+        Node(E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+        }
     }
 
 }

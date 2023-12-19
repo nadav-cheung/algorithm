@@ -16,10 +16,4 @@ public class DoublyLinkedList {
     }
 
 
-
-
-
-
-
-
 }
