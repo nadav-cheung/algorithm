@@ -64,6 +64,24 @@ public class StringMatch {
         }
     }
 
+    public static int search(String text, String pattern) {
+        int[] table = buildPartialMatchTable(pattern);
+        int j = 0;
+
+        for (int i = 0; i < text.length(); i++) {
+            while (j > 0 && text.charAt(i) != pattern.charAt(j)) {
+                j = table[j - 1];
+            }
+            if (text.charAt(i) == pattern.charAt(j)) {
+                j++;
+                if (j == pattern.length()) {
+                    return i - j + 1; // 匹配的起始索引
+                }
+            }
+        }
+        return -1; // 未找到模式
+    }
+
 
     /**
      * 计算目标子串的最长公共前缀后缀数组(LPS 数组)
@@ -124,8 +142,7 @@ public class StringMatch {
 
 
     public static void main(String[] args) {
-        int[] ints = computeLPSArray("AACAAACABC");
-        //                                   01012
+        int[] ints = buildPartialMatchTable("ABABAC");
         System.out.println(Arrays.toString(ints));
     }
 }

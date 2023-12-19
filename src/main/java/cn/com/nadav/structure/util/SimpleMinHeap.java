@@ -1,8 +1,6 @@
 package cn.com.nadav.structure.util;
 
 
-import jdk.internal.util.ArraysSupport;
-
 import java.util.Arrays;
 import java.util.Queue;
 
@@ -174,13 +172,13 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
      * @param minCapacity the desired minimum capacity
      */
     private void grow(int minCapacity) {
-        int oldCapacity = elementData.length;
-        // Double size if small; else grow by 50%
-        int newCapacity = ArraysSupport.newLength(oldCapacity,
-                minCapacity - oldCapacity, /* minimum growth */
-                oldCapacity < 64 ? oldCapacity + 2 : oldCapacity >> 1
-                /* preferred growth */);
-        elementData = Arrays.copyOf(elementData, newCapacity);
+//        int oldCapacity = elementData.length;
+//        // Double size if small; else grow by 50%
+//        int newCapacity = ArraysSupport.newLength(oldCapacity,
+//                minCapacity - oldCapacity, /* minimum growth */
+//                oldCapacity < 64 ? oldCapacity + 2 : oldCapacity >> 1
+//                /* preferred growth */);
+//        elementData = Arrays.copyOf(elementData, newCapacity);
     }
 
     /**
