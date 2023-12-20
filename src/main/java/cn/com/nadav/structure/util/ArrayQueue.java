@@ -2,6 +2,9 @@ package cn.com.nadav.structure.util;
 
 import java.util.Arrays;
 
+/**
+ * 基于数组实现的队列
+ */
 public class ArrayQueue<E> implements Queue<E> {
 
     /**
@@ -40,15 +43,23 @@ public class ArrayQueue<E> implements Queue<E> {
      * 其初始容量足以容纳指定数量的元素。
      */
     public ArrayQueue(int numElements) {
-        elements =
-                new Object[(numElements < 1) ? 1 :
-                        (numElements == Integer.MAX_VALUE) ? Integer.MAX_VALUE :
-                                numElements + 1];
+        int capacity;
+        if (numElements < 1) {
+            capacity = 1;
+        } else if (numElements == Integer.MAX_VALUE) {
+            capacity = Integer.MAX_VALUE;
+        } else {
+            capacity = numElements + 1;
+        }
+        elements = new Object[capacity];
     }
 
+    /**
+     * 计算环形数组中的元素数量
+     */
     static final int sub(int i, int j, int modulus) {
 
-        /**
+        /*
          * tail 指针永远指向一个待插入的空位置 这里没有元素
          * 当 tail>head 数量=tail-head
          * 当 head>tail 说明进入循环数组概念，参照时钟 此时数量= tail-head + elements.length
@@ -71,19 +82,21 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     /**
-     * 返回数组索引 i 处的元素。这是对泛型的轻微滥用，已被 javac 接受。
+     * 循环队列前移计算下标
+     */
+    static final int dec(int i, int modulus) {
+        if (--i < 0) {
+            i = modulus - 1;
+        }
+        return i;
+    }
+
+    /**
+     * 返回数组索引 i 处的元素。这是对泛型的轻微滥用
      */
     @SuppressWarnings("unchecked")
     static final <E> E elementAt(Object[] es, int i) {
         return (E) es[i];
-    }
-
-    /**
-     * 循环队列前移计算下标
-     */
-    static final int dec(int i, int modulus) {
-        if (--i < 0) i = modulus - 1;
-        return i;
     }
 
     /**
@@ -99,6 +112,9 @@ public class ArrayQueue<E> implements Queue<E> {
         return head == tail;
     }
 
+    /**
+     * 添加元素
+     */
     public boolean offer(E e) {
         return offerLast(e);
     }
@@ -116,7 +132,7 @@ public class ArrayQueue<E> implements Queue<E> {
         final Object[] es = elements;
         // 在尾部插入
         es[tail] = e;
-        // head == tail+1 则队列满 此时队列中有一个空间未利用
+        // head == tail + 1 则队列满
         // 因为 es[tail] 永远指向待插入的位置
         // 判断是否需要扩容
         if (head == (tail = inc(tail, es.length)))
@@ -125,18 +141,21 @@ public class ArrayQueue<E> implements Queue<E> {
     }
 
     /**
-     * 将此队列的容量至少增加给定量。
+     * 扩容接口，在原有容量的基础上至少增加 needed 容量
      *
      * @param needed the required minimum extra capacity; must be positive
      */
-    private void grow(int needed) {
+    protected void grow(int needed) {
 
         // oldCapacity
         final int oldCapacity = elements.length;
+
         int newCapacity;
-        // 小的话容量加倍；其他增长 50%
+
+        // jump增加的容量 小于64容量加倍；其他增长 50%
         int jump = (oldCapacity < 64) ? (oldCapacity + 2) : (oldCapacity >> 1);
 
+        // jump < needed || newCapacity > MAX_ARRAY_SIZE
         if (jump < needed
                 || (newCapacity = (oldCapacity + jump)) - MAX_ARRAY_SIZE > 0) {
             // 增长后的容量仍然不够 或者 已经超过设定的最大值
@@ -152,24 +171,27 @@ public class ArrayQueue<E> implements Queue<E> {
         if (tail < head || (tail == head && es[head] != null)) {
             // 环绕；将第一条腿滑动到阵列末尾
             int newSpace = newCapacity - oldCapacity;
-            System.arraycopy(es, head,
-                    es, head + newSpace,
-                    oldCapacity - head);
+
+            System.arraycopy(es, head, es, head + newSpace, oldCapacity - head);
+
             for (int i = head, to = (head += newSpace); i < to; i++)
                 es[i] = null;
         }
     }
 
     /**
+     * jump < needed || newCapacity > MAX_ARRAY_SIZE
+     * 重新计算扩容后的容量的大小
      * 边缘条件的容量计算，特别是溢出。
      */
     private int newCapacity(int needed, int jump) {
+
         final int oldCapacity = elements.length, minCapacity;
 
         if ((minCapacity = oldCapacity + needed) - MAX_ARRAY_SIZE > 0) {
             // 溢出抛异常
             if (minCapacity < 0)
-                throw new IllegalStateException("Sorry, deque too big");
+                throw new IllegalStateException("Sorry, queue too big");
             return Integer.MAX_VALUE;
         }
         // 取较大者
@@ -205,16 +227,4 @@ public class ArrayQueue<E> implements Queue<E> {
     public E peekFirst() {
         return elementAt(elements, head);
     }
-
-    public void addFirst(E e) {
-        if (e == null)
-            throw new NullPointerException();
-        final Object[] es = elements;
-        // 计算head的位置 并存放元素
-        es[head = dec(head, es.length)] = e;
-        // 判断是否需要扩容
-        if (head == tail)
-            grow(1);
-    }
-
 }

@@ -24,6 +24,17 @@ public class ArrayDeque<E> extends ArrayQueue<E> implements Deque<E> {
         return true;
     }
 
+    private void addFirst(E e) {
+        if (e == null)
+            throw new NullPointerException();
+        final Object[] es = elements;
+        // 计算head的位置 并存放元素
+        es[head = dec(head, es.length)] = e;
+        // 判断是否需要扩容
+        if (head == tail)
+            grow(1);
+    }
+
     @Override
     public E pollLast() {
         final Object[] es;
@@ -37,4 +48,6 @@ public class ArrayDeque<E> extends ArrayQueue<E> implements Deque<E> {
             es[tail = t] = null;
         return e;
     }
+
+
 }
