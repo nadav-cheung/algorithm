@@ -14,7 +14,7 @@ public interface List<E> {
     /**
      * 将此列表中指定位置的元素替换为指定元素（可选操作）
      *
-     * @param index
+     * @param index index
      * @param e     原来下标中的旧值
      */
     E set(int index, E e);
@@ -22,9 +22,6 @@ public interface List<E> {
     /**
      * 在此列表中的指定位置插入指定元素（可选操作）。
      * 将当前位于该位置的元素（如果有）和任何后续元素向右移动（将其索引加一）。
-     *
-     * @param index
-     * @param e
      */
     void add(int index, E e);
 
@@ -38,9 +35,6 @@ public interface List<E> {
 
     /**
      * 列表中是否包含元素e
-     *
-     * @param e
-     * @return
      */
     int indexOf(E e);
 
@@ -70,8 +64,6 @@ public interface List<E> {
 
     /**
      * 返回此列表中的元素数量
-     *
-     * @return
      */
     int size();
 

@@ -2,26 +2,8 @@ package cn.com.nadav.structure.util;
 
 public class BinarySearchTree<K extends Comparable<? super K>, V> {
 
-    static class Node<K, V> {
-        public K key;
-        public V value;
-        public Node<K, V> left, right;
-
-        public Node(K key, V value, Node<K, V> left, Node<K, V> right) {
-            this.key = key;
-            this.value = value;
-            this.left = left;
-            this.right = right;
-        }
-
-        public Node(K key, V value) {
-            this(key, value, null, null);
-        }
-    }
-
     private Node<K, V> root;
     private int size;
-
     public BinarySearchTree() {
         root = null;
         size = 0;
@@ -38,7 +20,6 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
     public void add(K key, V value) {
         root = add(root, key, value);
     }
-
 
     /**
      * 向以node为根的二分搜索树中添加键值对key value
@@ -77,7 +58,6 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
             return node;
         }
     }
-
 
     public V get(K key) {
         Node<K, V> node = getNode(root, key);
@@ -138,6 +118,23 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
             return node;
         }
         return minimum(node.left);
+    }
+
+    static class Node<K, V> {
+        public K key;
+        public V value;
+        public Node<K, V> left, right;
+
+        public Node(K key, V value, Node<K, V> left, Node<K, V> right) {
+            this.key = key;
+            this.value = value;
+            this.left = left;
+            this.right = right;
+        }
+
+        public Node(K key, V value) {
+            this(key, value, null, null);
+        }
     }
 
 

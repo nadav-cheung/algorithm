@@ -1,12 +1,27 @@
 package cn.com.nadav.structure.util;
 
 
+import java.util.Arrays;
+
 /**
  * 必要条件
  * 元素必须实现Comparable接口 是可比较的
  */
-public class SimpleMinHeap<E extends Comparable<? super E>> {
+public class ComparableMinHeap<E extends Comparable<? super E>> {
 
+    /**
+     * A soft maximum array length imposed by array growth computations.
+     * Some JVMs (such as HotSpot) have an implementation limit that will cause
+     * <p>
+     * OutOfMemoryError("Requested array size exceeds VM limit")
+     * <p>
+     * to be thrown if a request is made to allocate an array of some length near
+     * Integer.MAX_VALUE, even if there is sufficient heap available. The actual
+     * limit might depend on some JVM implementation-specific characteristics such
+     * as the object header size. The soft maximum value is chosen conservatively so
+     * as to be smaller than any implementation limit that is likely to be encountered.
+     */
+    public static final int SOFT_MAX_ARRAY_LENGTH = Integer.MAX_VALUE - 8;
     // 1+2+4+8
     private static final int DEFAULT_INITIAL_CAPACITY = 15;
     int size = 0;
@@ -14,17 +29,17 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
     private Object[] elementData;
 
 
-    public SimpleMinHeap() {
+    public ComparableMinHeap() {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
-    public SimpleMinHeap(int initialCapacity) {
+    public ComparableMinHeap(int initialCapacity) {
         if (initialCapacity < 1)
             throw new IllegalArgumentException();
         this.elementData = new Object[initialCapacity];
     }
 
-    public SimpleMinHeap(E[] data) {
+    public ComparableMinHeap(E[] data) {
         initFromArray(data);
     }
 
@@ -77,6 +92,32 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
             k = parent;
         }
         es[k] = key;
+    }
+
+    public static int newLength(int oldLength, int minGrowth, int prefGrowth) {
+        // preconditions not checked because of inlining
+        // assert oldLength >= 0
+        // assert minGrowth > 0
+
+        int prefLength = oldLength + Math.max(minGrowth, prefGrowth); // might overflow
+        if (0 < prefLength && prefLength <= SOFT_MAX_ARRAY_LENGTH) {
+            return prefLength;
+        } else {
+            // put code cold in a separate method
+            return hugeLength(oldLength, minGrowth);
+        }
+    }
+
+    private static int hugeLength(int oldLength, int minGrowth) {
+        int minLength = oldLength + minGrowth;
+        if (minLength < 0) { // overflow
+            throw new OutOfMemoryError(
+                    "Required array length " + oldLength + " + " + minGrowth + " is too large");
+        } else if (minLength <= SOFT_MAX_ARRAY_LENGTH) {
+            return SOFT_MAX_ARRAY_LENGTH;
+        } else {
+            return minLength;
+        }
     }
 
     private void initFromArray(E[] data) {
@@ -171,7 +212,7 @@ public class SimpleMinHeap<E extends Comparable<? super E>> {
     private void grow(int minCapacity) {
         int oldCapacity = elementData.length;
         // Double size if small; else grow by 50%
-        int newCapacity = ArraysSupport.newLength(oldCapacity,
+        int newCapacity = newLength(oldCapacity,
                 minCapacity - oldCapacity, /* minimum growth */
                 oldCapacity < 64 ? oldCapacity + 2 : oldCapacity >> 1
                 /* preferred growth */);

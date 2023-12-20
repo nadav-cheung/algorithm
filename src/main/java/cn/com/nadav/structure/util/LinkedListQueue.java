@@ -5,29 +5,16 @@ package cn.com.nadav.structure.util;
  */
 public class LinkedListQueue<E> implements Queue<E> {
 
-    private static class Node<E> {
-        E data;
-
-        Node<E> next;
-
-        Node(E data) {
-            this.data = data;
-        }
-    }
-
-
     /**
      * 头指针和尾指针
      */
     Node<E> head, tail;
     transient int size = 0;
-
     public LinkedListQueue() {
         this.head = null;
         this.tail = null;
         this.size = 0;
     }
-
 
     @Override
     public int size() {
@@ -73,5 +60,15 @@ public class LinkedListQueue<E> implements Queue<E> {
             return null;
         }
         return head.data;
+    }
+
+    private static class Node<E> {
+        E data;
+
+        Node<E> next;
+
+        Node(E data) {
+            this.data = data;
+        }
     }
 }

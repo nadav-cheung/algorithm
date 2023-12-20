@@ -5,22 +5,11 @@ package cn.com.nadav.structure.util;
  */
 public class LinkedListDeque<E> implements Deque<E> {
 
-    private static class Node<E> {
-        E data;
-
-        Node<E> prev, next;
-
-        Node(E data) {
-            this.data = data;
-        }
-    }
-
     /**
      * 头指针和尾指针
      */
     Node<E> head, tail;
     transient int size;
-
     public LinkedListDeque() {
         this.head = null;
         this.tail = null;
@@ -76,7 +65,6 @@ public class LinkedListDeque<E> implements Deque<E> {
         return head.data;
     }
 
-
     @Override
     public boolean offerFirst(E e) {
         Node<E> newNode = new Node<>(e);
@@ -107,5 +95,15 @@ public class LinkedListDeque<E> implements Deque<E> {
         }
         size--;
         return data;
+    }
+
+    private static class Node<E> {
+        E data;
+
+        Node<E> prev, next;
+
+        Node(E data) {
+            this.data = data;
+        }
     }
 }
