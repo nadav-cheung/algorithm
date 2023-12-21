@@ -1,7 +1,5 @@
 package cn.com.nadav.structure.util;
 
-import java.util.LinkedList;
-
 // 使用双向链表实现List数据结构
 public class DoublyLinkedList<E> implements List<E> {
 
@@ -166,42 +164,117 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
 
-
     private void checkPositionIndex(int index) {
         if (!isPositionIndex(index))
             throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
     }
+
     private boolean isPositionIndex(int index) {
         return index >= 0 && index <= size;
     }
 
     @Override
     public boolean add(E e) {
-        return false;
+        linkLast(e);
+        return true;
     }
 
     @Override
     public int indexOf(E e) {
-        return 0;
+        int index = 0;
+        if (e == null) {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (x.item == null)
+                    return index;
+                index++;
+            }
+        } else {
+            for (Node<E> x = first; x != null; x = x.next) {
+                // equal 判断相等
+                if (e.equals(x.item))
+                    return index;
+                index++;
+            }
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(E o) {
-        return 0;
+        int index = size;
+        if (o == null) {
+            for (Node<E> x = last; x != null; x = x.prev) {
+                index--;
+                if (x.item == null)
+                    return index;
+            }
+        } else {
+            for (Node<E> x = last; x != null; x = x.prev) {
+                index--;
+                if (o.equals(x.item))
+                    return index;
+            }
+        }
+        return -1;
     }
 
     @Override
     public boolean contains(E o) {
-        return false;
+        return indexOf(o) >= 0;
     }
 
     @Override
     public E remove(int index) {
-        return null;
+        checkElementIndex(index);
+        return unlink(node(index));
     }
+
+    /**
+     * Unlinks non-null node x.
+     */
+    E unlink(Node<E> x) {
+        // assert x != null;
+        final E element = x.item;
+        final Node<E> next = x.next;
+        final Node<E> prev = x.prev;
+
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+            x.prev = null;
+        }
+
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+            x.next = null;
+        }
+
+        x.item = null;
+        size--;
+        return element;
+    }
+
 
     @Override
     public boolean remove(E o) {
+        if (o == null) {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (x.item == null) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        } else {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (o.equals(x.item)) {
+                    unlink(x);
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
