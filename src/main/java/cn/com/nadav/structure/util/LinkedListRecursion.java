@@ -5,6 +5,7 @@ package cn.com.nadav.structure.util;
  */
 public class LinkedListRecursion<E> {
     private Node<E> head;
+
     public LinkedListRecursion() {
         head = null;
     }
@@ -35,6 +36,7 @@ public class LinkedListRecursion<E> {
         public Node(E e) {
             this(e, null);
         }
+
         public Node() {
             this(null, null);
         }

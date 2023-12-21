@@ -10,6 +10,7 @@ public class LinkedListQueue<E> implements Queue<E> {
      */
     Node<E> head, tail;
     transient int size = 0;
+
     public LinkedListQueue() {
         this.head = null;
         this.tail = null;

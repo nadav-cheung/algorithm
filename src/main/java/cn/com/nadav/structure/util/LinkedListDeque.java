@@ -10,6 +10,7 @@ public class LinkedListDeque<E> implements Deque<E> {
      */
     Node<E> head, tail;
     transient int size;
+
     public LinkedListDeque() {
         this.head = null;
         this.tail = null;
