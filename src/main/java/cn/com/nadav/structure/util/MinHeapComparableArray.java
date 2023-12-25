@@ -7,7 +7,7 @@ import java.util.Arrays;
  * 必要条件
  * 元素必须实现Comparable接口 是可比较的
  */
-public class ComparableMinHeap<E extends Comparable<? super E>> {
+public class MinHeapComparableArray<E extends Comparable<? super E>> {
 
     /**
      * A soft maximum array length imposed by array growth computations.
@@ -29,17 +29,22 @@ public class ComparableMinHeap<E extends Comparable<? super E>> {
     private Object[] elementData;
 
 
-    public ComparableMinHeap() {
+    public MinHeapComparableArray() {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
-    public ComparableMinHeap(int initialCapacity) {
+    public MinHeapComparableArray(int initialCapacity) {
         if (initialCapacity < 1)
             throw new IllegalArgumentException();
         this.elementData = new Object[initialCapacity];
     }
 
-    public ComparableMinHeap(E[] data) {
+    /**
+     * 将一个数组堆化处理
+     *
+     * @param data 带堆化的数组
+     */
+    public MinHeapComparableArray(E[] data) {
         initFromArray(data);
     }
 
@@ -55,36 +60,66 @@ public class ComparableMinHeap<E extends Comparable<? super E>> {
         // 将 x 沿着树重复降级直到它小于或等于其子项或者是叶子来保持堆不变性。
         while (k < half) {
             // 记录两个孩子节点中的较小节点
-            int child = (k << 1) + 1; // assume left child is least
-            // 记录 两个孩子节点中的较小指
+            int child = leftChild(k); // assume left child is least
+            // 记录 两个孩子节点中的较小者
             Object c = es[child];
             // 右边孩子节点
             int right = child + 1;
-            // 右边孩子节点存在 并且 左边孩子节点大于右边孩子节点
+            // 右边孩子节点存在 并且 左边孩子节点大于右边孩子节点 寻找两个孩子节点中的较小者
             if (right < n &&
                     ((Comparable<? super T>) c).compareTo((T) es[right]) > 0)
+                // 更新孩子节点和索引
                 c = es[child = right];
 
-            // key比 较小节点还小
+            // key小于两个孩子节点 满足堆的性质
             if (key.compareTo((T) c) <= 0)
                 break;
+
+            // 不满足性质 在k的位置插入较小的孩子节点
             es[k] = c;
-            // 下一轮开始 孩子节点比较
+            // x 沿着树降级 将k更新为较小的孩子节点
             k = child;
         }
-        // 在位置 k 处插入项 x，
+        // 跳出循环 在位置 k 处插入项 x，
         es[k] = key;
     }
+
+    private static int leftChild(int k) {
+        return (k << 1) + 1;
+    }
+
+    private static int rightChild(int k) {
+        return (k << 1) + 2;
+    }
+
+
+    // 大根堆的 siftDown操作
+//    private void siftDown(int k) {
+//        while (leftChild(k) < elementData.length) {
+//            int j = leftChild(k);
+//            if (j + 1 < elementData.length && elementData[j + 1].compareTo(elementData[j]) > 0) {
+//                j = rightChild(k);
+//            }
+//            // data[j] 是 leftChild rightChild 中的最值
+//            if (elementData[k].compareTo(elementData[j]) > 0) {
+//                break;
+//            }
+//            elementData.swap(k, j);
+//            k = j;
+//        }
+//    }
+
 
     // Ensures that elementData[0] exists, helping peek() and poll().
     private static Object[] ensureNonEmpty(Object[] es) {
         return (es.length > 0) ? es : new Object[1];
     }
 
+    @SuppressWarnings("unchecked")
     private static <T> void siftUpComparable(int k, T x, Object[] es) {
         Comparable<? super T> key = (Comparable<? super T>) x;
         while (k > 0) {
-            int parent = (k - 1) >>> 1;
+            int parent = parent(k);
             Object e = es[parent];
             if (key.compareTo((T) e) >= 0)
                 break;
@@ -92,6 +127,13 @@ public class ComparableMinHeap<E extends Comparable<? super E>> {
             k = parent;
         }
         es[k] = key;
+    }
+
+    private static int parent(int index) {
+        if (index == 0) {
+            throw new IllegalArgumentException("index-0 doesn't have parent");
+        }
+        return (index - 1) >>> 1;
     }
 
     public static int newLength(int oldLength, int minGrowth, int prefGrowth) {
@@ -166,13 +208,12 @@ public class ComparableMinHeap<E extends Comparable<? super E>> {
      * @param data 初始化传入的树组
      */
     private void initElementsFromArray(E[] data) {
-        Object[] es = data;
-        int len = es.length;
-        if (len == 1)
-            for (Object e : es)
-                if (e == null)
-                    throw new NullPointerException();
-        this.elementData = ensureNonEmpty(es);
+        int len = data.length;
+        for (Object e : data)
+            if (e == null)
+                throw new NullPointerException();
+        // 确保已经初始化
+        this.elementData = ensureNonEmpty(data);
         this.size = len;
     }
 
@@ -222,7 +263,7 @@ public class ComparableMinHeap<E extends Comparable<? super E>> {
     /**
      * 上浮操作
      * 在位置 k 处插入项 x，通过将 x 沿树向上提升直到它大于或等于其父项，或者是根，来保持堆不变性。
-     * 为了简化和加速强制和比较 （与 siftDown 类似。）
+     * 与 siftDown 类似
      */
     private void siftUp(int k, E x) {
         siftUpComparable(k, x, elementData);
