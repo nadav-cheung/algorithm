@@ -7,33 +7,22 @@ import java.util.Arrays;
  * 必要条件
  * 元素必须实现Comparable接口 是可比较的
  */
-public class MinHeapComparableArray<E extends Comparable<? super E>> {
+public class ComparableArrayMinHeap<E extends Comparable<? super E>> {
 
-    /**
-     * A soft maximum array length imposed by array growth computations.
-     * Some JVMs (such as HotSpot) have an implementation limit that will cause
-     * <p>
-     * OutOfMemoryError("Requested array size exceeds VM limit")
-     * <p>
-     * to be thrown if a request is made to allocate an array of some length near
-     * Integer.MAX_VALUE, even if there is sufficient heap available. The actual
-     * limit might depend on some JVM implementation-specific characteristics such
-     * as the object header size. The soft maximum value is chosen conservatively so
-     * as to be smaller than any implementation limit that is likely to be encountered.
-     */
     public static final int SOFT_MAX_ARRAY_LENGTH = Integer.MAX_VALUE - 8;
     // 1+2+4+8
     private static final int DEFAULT_INITIAL_CAPACITY = 15;
-    int size = 0;
+
+    transient int size = 0;
     //用来存放数据
     private Object[] elementData;
 
 
-    public MinHeapComparableArray() {
+    public ComparableArrayMinHeap() {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
-    public MinHeapComparableArray(int initialCapacity) {
+    public ComparableArrayMinHeap(int initialCapacity) {
         if (initialCapacity < 1)
             throw new IllegalArgumentException();
         this.elementData = new Object[initialCapacity];
@@ -44,7 +33,7 @@ public class MinHeapComparableArray<E extends Comparable<? super E>> {
      *
      * @param data 带堆化的数组
      */
-    public MinHeapComparableArray(E[] data) {
+    public ComparableArrayMinHeap(E[] data) {
         initFromArray(data);
     }
 
@@ -92,22 +81,6 @@ public class MinHeapComparableArray<E extends Comparable<? super E>> {
         return (k << 1) + 2;
     }
 
-
-    // 大根堆的 siftDown操作
-//    private void siftDown(int k) {
-//        while (leftChild(k) < elementData.length) {
-//            int j = leftChild(k);
-//            if (j + 1 < elementData.length && elementData[j + 1].compareTo(elementData[j]) > 0) {
-//                j = rightChild(k);
-//            }
-//            // data[j] 是 leftChild rightChild 中的最值
-//            if (elementData[k].compareTo(elementData[j]) > 0) {
-//                break;
-//            }
-//            elementData.swap(k, j);
-//            k = j;
-//        }
-//    }
 
 
     // Ensures that elementData[0] exists, helping peek() and poll().
@@ -173,7 +146,9 @@ public class MinHeapComparableArray<E extends Comparable<? super E>> {
     @SuppressWarnings("unchecked")
     private void heapify() {
         final Object[] es = elementData;
+        // 容量
         int n = size;
+        //
         int i = (n >>> 1) - 1;
         for (; i >= 0; i--)
             siftDownComparable(i, (E) es[i], es, n);
