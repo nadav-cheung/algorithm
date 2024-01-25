@@ -3,13 +3,30 @@ package cn.com.nadav.algorithm.sort;
 import java.util.Arrays;
 
 public class HeapSort<T extends Comparable<? super T>> {
+    private static int leftChild(int k) {
+        return (k << 1) + 1;
+    }
+
+    // 测试代码
+    public static void main(String args[]) {
+        Integer[] intArray = {12, 11, 13, 5, 6, 7};
+        HeapSort<Integer> intSorter = new HeapSort<>();
+        intSorter.sort(intArray);
+        System.out.println("Sorted Integer array: " + Arrays.toString(intArray));
+
+        String[] stringArray = {"banana", "orange", "apple", "grape", "lemon"};
+        HeapSort<String> stringSorter = new HeapSort<>();
+        stringSorter.sort(stringArray);
+        System.out.println("Sorted String array: " + Arrays.toString(stringArray));
+    }
+
     public void sort(T[] nums) {
         int length = nums.length;
 
         // 构建最大堆
         heapify(nums, length);
 
-        // 逐个从堆顶取出元素到数组末尾，完成排序
+        // 逐个从堆顶取出元素放到数组末尾，完成排序
         for (int i = length - 1; i > 0; i--) {
             // 队尾元素
             T heapTail = nums[i];
@@ -23,13 +40,11 @@ public class HeapSort<T extends Comparable<? super T>> {
         }
     }
 
-
     private void heapify(T[] nums, int length) {
         int i = (length >>> 1) - 1;
         for (; i >= 0; i--)
             siftDownComparable(i, nums[i], nums, length);
     }
-
 
     /**
      * 在位置 k 处插入项 x，通过将 x 沿着树重复降级直到它小于或等于其子项或者是叶子来保持堆不变性。
@@ -65,24 +80,6 @@ public class HeapSort<T extends Comparable<? super T>> {
         }
         // 跳出循环 在位置 k 处插入项 x，
         nums[k] = x;
-    }
-
-    private static int leftChild(int k) {
-        return (k << 1) + 1;
-    }
-
-
-    // 测试代码
-    public static void main(String args[]) {
-        Integer[] intArray = {12, 11, 13, 5, 6, 7};
-        HeapSort<Integer> intSorter = new HeapSort<>();
-        intSorter.sort(intArray);
-        System.out.println("Sorted Integer array: " + Arrays.toString(intArray));
-
-        String[] stringArray = {"banana", "orange", "apple", "grape", "lemon"};
-        HeapSort<String> stringSorter = new HeapSort<>();
-        stringSorter.sort(stringArray);
-        System.out.println("Sorted String array: " + Arrays.toString(stringArray));
     }
 
 }

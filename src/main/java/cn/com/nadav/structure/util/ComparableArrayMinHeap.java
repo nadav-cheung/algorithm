@@ -82,7 +82,6 @@ public class ComparableArrayMinHeap<E extends Comparable<? super E>> {
     }
 
 
-
     // Ensures that elementData[0] exists, helping peek() and poll().
     private static Object[] ensureNonEmpty(Object[] es) {
         return (es.length > 0) ? es : new Object[1];
