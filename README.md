@@ -65,7 +65,7 @@ cd algorithm
 
 ## 许可证
 
-本项目是根据 Apache License 2.0 版发布的。
+本项目是根据 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) 版发布的。
 
 ## 致谢
 
