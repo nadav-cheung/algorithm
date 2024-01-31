@@ -8,15 +8,12 @@ import java.util.Arrays;
  */
 public class StringMatch {
 
-
     public static int bruteForce(String source, String pattern) {
         if (source.length() < pattern.length()) {
             return -1;
         }
 
         // s[i,i+pattern.length-1] == pattern 判断s的子串是否和t相同
-        // aaaa
-        //   aa
         for (int i = 0; i + pattern.length() - 1 < source.length(); i++) {
 
             int j = 0;
@@ -34,7 +31,7 @@ public class StringMatch {
 
 
     /**
-     * kmp
+     * kmp search
      *
      * @param text
      * @param pattern
@@ -140,9 +137,4 @@ public class StringMatch {
         return table;
     }
 
-
-    public static void main(String[] args) {
-        int[] ints = buildPartialMatchTable("ABABAC");
-        System.out.println(Arrays.toString(ints));
-    }
 }

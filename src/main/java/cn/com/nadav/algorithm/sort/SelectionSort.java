@@ -54,27 +54,4 @@ public class SelectionSort {
         temp = null;
     }
 
-
-    public static void main(String[] args) {
-        int[] nums = new int[]{2, 4, 6, 1, 2, 3};
-        int len = nums.length;
-        // nums[0,6) 左闭右开区间
-        for (int i = 0; i < len; i++) {
-
-        }
-        // nums[0,5] 左闭右闭区间
-        for (int i = 0; i <= len - 1; i++) {
-
-        }
-
-        // 寻找数组中最小的元素
-        int minIndex = 0;
-        for (int i = 0; i < len; i++) {
-            if (nums[minIndex] > nums[i]) {
-                minIndex = i;
-            }
-        }
-    }
-
-
 }

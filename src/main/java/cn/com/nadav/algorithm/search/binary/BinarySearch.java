@@ -307,11 +307,4 @@ public class BinarySearch {
         return -1;
     }
 
-
-    public static void main(String[] args) {
-        int leftBound = rightBound(new int[]{2, 3, 4, 5, 8, 8, 8, 9, 10}, 8);
-        System.out.println(leftBound);
-    }
-
-
 }

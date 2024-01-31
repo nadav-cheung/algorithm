@@ -31,6 +31,7 @@ public class PriorityQueue<E> implements Queue<E> {
         return (nums.length > 0) ? nums : new Object[1];
     }
 
+    @SuppressWarnings("unchecked")
     private static <E> void siftDownComparable(int index, Object element, Object[] elements, int length) {
         int half = length >>> 1;
         Comparable<? super E> key = (Comparable<? super E>) element;
