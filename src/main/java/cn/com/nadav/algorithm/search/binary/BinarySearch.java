@@ -139,17 +139,6 @@ public class BinarySearch {
         while (left < right) {
             int mid = left + (right - left) / 2;
 
-            // 此时 right 可能是答案，也肯不是
-//            if (nums[mid] == target) {
-//                right = mid;
-//            }
-//            if (nums[mid] < target) {
-//                left = mid + 1;
-//            }
-//            if (nums[mid] > target) {
-//                right = mid;
-//            }
-
             if (nums[mid] < target) {
                 left = mid + 1;
             } else {

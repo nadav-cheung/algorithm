@@ -24,7 +24,8 @@ public class LinkedListRecursion<E> {
         return node;
     }
 
-    static class Node<E> {
+    private static class Node<E> {
+
         public E e;
         public Node<E> next;
 

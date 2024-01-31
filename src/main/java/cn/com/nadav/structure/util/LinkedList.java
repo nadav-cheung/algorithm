@@ -1,7 +1,7 @@
 package cn.com.nadav.structure.util;
 
 // 使用双向链表实现List数据结构
-public class DoublyLinkedList<E> implements List<E> {
+public class LinkedList<E> implements List<E> {
 
 
     transient int size = 0;
@@ -19,7 +19,7 @@ public class DoublyLinkedList<E> implements List<E> {
     /**
      * Constructs an empty list.
      */
-    public DoublyLinkedList() {
+    public LinkedList() {
     }
 
     /**
