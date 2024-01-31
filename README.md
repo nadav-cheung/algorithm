@@ -65,7 +65,7 @@ cd algorithm
 
 ## 许可证
 
-本项目采用MIT许可证。
+本项目是根据 Apache License 2.0 版发布的。
 
 ## 致谢
 
@@ -97,4 +97,4 @@ cd algorithm
 
 ## 联系方式
 
-如有疑问或建议，请通过我的[邮箱](nadav.cheung@gmail.com)联系我。
+如有疑问或建议，请通过我的邮箱(nadav.cheung@gmail.com)联系我。
