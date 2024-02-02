@@ -97,4 +97,4 @@ cd algorithm
 
 ## 联系方式
 
-如有疑问或建议，请通过我的邮箱(nadav.cheung@gmail.com)联系我。
+如有疑问或建议，请通过我的邮箱(nadav.cheung@gmail.com)联系我。算法与数据结构：字符串搜索算法
