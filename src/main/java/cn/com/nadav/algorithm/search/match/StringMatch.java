@@ -1,13 +1,19 @@
 package cn.com.nadav.algorithm.search.match;
 
-import java.util.Arrays;
-
 /**
  * @author nadav cheung
  * @date 8/16/23
  */
 public class StringMatch {
 
+
+    /**
+     * brute force search
+     *
+     * @param source
+     * @param pattern
+     * @return
+     */
     public static int bruteForce(String source, String pattern) {
         if (source.length() < pattern.length()) {
             return -1;

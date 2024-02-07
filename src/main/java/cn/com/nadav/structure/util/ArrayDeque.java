@@ -18,12 +18,25 @@ public class ArrayDeque<E> extends ArrayQueue<E> implements Deque<E> {
     }
 
 
+    /**
+     * 构造一个包含指定集合的元素的数组队列，
+     *
+     * @param e 集合
+     * @return 数组队列
+     */
     @Override
     public boolean offerFirst(E e) {
         addFirst(e);
         return true;
     }
 
+
+    /**
+     * 构造一个包含指定集合的元素的数组队列，
+     *
+     * @param e 集合
+     * @return 数组队列
+     */
     private void addFirst(E e) {
         if (e == null)
             throw new NullPointerException();
@@ -34,6 +47,7 @@ public class ArrayDeque<E> extends ArrayQueue<E> implements Deque<E> {
         if (head == tail)
             grow(1);
     }
+
 
     @Override
     public E pollLast() {

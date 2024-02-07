@@ -56,6 +56,13 @@ public class BinarySearch {
     }
 
 
+    /**
+     * @param array  数组
+     * @param l      左边界
+     * @param r      右边界 初始化时等于数组长度  array[l,r)左闭右开区间
+     * @param target
+     * @return
+     */
     public static <E extends Comparable<? super E>> int recursionSearch(E[] array, int l, int r, E target) {
         if (l >= r) {
             return -1;
@@ -76,7 +83,11 @@ public class BinarySearch {
 
 
     /**
-     * 迭代实现
+     * 二分查找迭代算法
+     *
+     * @param array
+     * @param target
+     * @return
      */
     public static int iterationSearch(int[] array, int target) {
         int l = 0;
@@ -96,6 +107,14 @@ public class BinarySearch {
     }
 
 
+    /**
+     * 二分查找迭代算法
+     *
+     * @param array  数组
+     * @param target 目标数据
+     * @param <E>    泛型
+     * @return 返回数组下标 不存在则返回-1
+     */
     public static <E extends Comparable<? super E>> int iterationSearch(E[] array, E target) {
         int l = 0;
         int r = array.length;
