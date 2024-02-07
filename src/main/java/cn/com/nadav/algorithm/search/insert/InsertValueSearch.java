@@ -24,6 +24,12 @@ public class InsertValueSearch {
      */
     public static int interpolationSearch(int[] arr, int low, int high, int target) {
         if (low <= high && target >= arr[low] && target <= arr[high]) {
+
+            // Avoid division by zero if arr[high] is equal to arr[low]
+            if (arr[high] == arr[low]) {
+                return (arr[low] == target) ? low : -1; // If arr[low] is the target, return low, else target not found
+            }
+
             // 计算插值位置
             int pos = low + ((target - arr[low]) * (high - low)) / (arr[high] - arr[low]);
 

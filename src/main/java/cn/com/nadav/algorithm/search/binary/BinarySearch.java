@@ -19,6 +19,9 @@ public class BinarySearch {
      * @return array index 不存在则返回-1
      */
     public static int recursionSearch(int[] array, int target) {
+        if (array == null || array.length == 0) {
+            return -1;
+        }
         return recursionSearch(array, 0, array.length, target);
     }
 
@@ -173,6 +176,17 @@ public class BinarySearch {
         return left;
     }
 
+
+    /**
+     * * 在一个可重复的有序数组中寻找第一次出现的元素
+     * * 不断向左边逼近
+     * * 左边界问题      288889｜8
+     *
+     * @param nums
+     * @param target
+     * @param <E>
+     * @return
+     */
     private static int findLeftBound(int[] nums, int target) {
         if (nums == null || nums.length == 0) return -1;
 
@@ -243,7 +257,6 @@ public class BinarySearch {
      * @param target
      * @return
      */
-
     public static int rightBound(int[] data, int target) {
         if (data == null || data.length == 0) {
             return -1;
@@ -275,6 +288,17 @@ public class BinarySearch {
     }
 
 
+
+    /**
+     * * 在一个可重复的有序数组中寻找最后一次出现的元素
+     * * 不断向右边逼近
+     * * 右边界问题      288889｜8
+     *
+     * @param nums
+     * @param target
+     * @param <E>
+     * @return
+     */
     private static int findRightBound(int[] nums, int target) {
         if (nums == null || nums.length == 0) return -1;
 
@@ -300,6 +324,16 @@ public class BinarySearch {
     }
 
 
+    /**
+     * * 在一个可重复的有序数组中寻找最后一次出现的元素
+     * * 不断向右边逼近
+     * * 右边界问题      288889｜8
+     *
+     * @param nums
+     * @param target
+     * @param <E>
+     * @return
+     */
     public static <E extends Comparable<? super E>> int rightBound(E[] nums, E target) {
         if (nums.length == 0) {
             return -1;
