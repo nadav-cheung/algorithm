@@ -7,18 +7,6 @@ public class HeapSort<T extends Comparable<? super T>> {
         return (k << 1) + 1;
     }
 
-    // 测试代码
-    public static void main(String args[]) {
-        Integer[] intArray = {12, 11, 13, 5, 6, 7};
-        HeapSort<Integer> intSorter = new HeapSort<>();
-        intSorter.sort(intArray);
-        System.out.println("Sorted Integer array: " + Arrays.toString(intArray));
-
-        String[] stringArray = {"banana", "orange", "apple", "grape", "lemon"};
-        HeapSort<String> stringSorter = new HeapSort<>();
-        stringSorter.sort(stringArray);
-        System.out.println("Sorted String array: " + Arrays.toString(stringArray));
-    }
 
     public void sort(T[] nums) {
         int length = nums.length;

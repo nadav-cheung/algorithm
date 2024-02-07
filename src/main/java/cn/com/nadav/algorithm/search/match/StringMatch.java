@@ -68,6 +68,16 @@ public class StringMatch {
     }
 
     public static int search(String text, String pattern) {
+        // 检查pattern是否为空
+        if (pattern.isEmpty()) {
+            return 0;  // 如果pattern为空字符串，则认为它出现在text的开始位置
+        }
+
+        // 检查text是否比pattern短
+        if (text.length() < pattern.length()) {
+            return -1;  // 如果text比pattern短，则pattern不可能出现在text中
+        }
+
         int[] table = buildPartialMatchTable(pattern);
         int j = 0;
 
@@ -123,6 +133,13 @@ public class StringMatch {
 
     public static int[] buildPartialMatchTable(String pattern) {
         int patternLength = pattern.length();
+
+
+        // fix bug index out of range
+        if (patternLength == 0) {
+            return new int[0];
+        }
+
         int[] table = new int[patternLength];
         int length = 0; // 最长公共前缀和后缀的长度
 
