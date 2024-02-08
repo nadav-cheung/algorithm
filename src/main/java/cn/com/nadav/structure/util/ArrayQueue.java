@@ -99,6 +99,10 @@ public class ArrayQueue<E> implements Queue<E> {
         return (E) es[i];
     }
 
+    public int capacity() {
+        return elements.length - 1;
+    }
+
     /**
      * 返回此队列中的元素数量。
      */

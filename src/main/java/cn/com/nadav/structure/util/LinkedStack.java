@@ -14,21 +14,37 @@ public class LinkedStack<E> implements Stack<E> {
 
     private Node<E> top; // 栈顶元素
 
+
+    public LinkedStack() {
+        this.size = 0;
+        this.top = null;
+    }
+
+
     @Override
     public E push(E e) {
-        return null;
+        top = new Node<>(e, top);
+        size++;
+        return e;
     }
 
 
     /**
      * 演示采用递归方法添加元素
      *
-     * @param e
+     * @param e 要添加的元素
      */
     private void add(E e) {
         this.add(0, e);
+        size++;
     }
 
+    /**
+     * 递归的宏观语义   在链表的index位置插入e
+     *
+     * @param index 插入位置
+     * @param e     要插入的元素
+     */
     private void add(int index, E e) {
         top = add(top, index, e);
     }
@@ -46,17 +62,26 @@ public class LinkedStack<E> implements Stack<E> {
 
     @Override
     public E pop() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        E e = top.item;
+        top = top.next;
+        size--;
+        return e;
     }
 
     @Override
     public E peek() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        return top.item;
     }
 
     @Override
     public boolean empty() {
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -73,7 +98,6 @@ public class LinkedStack<E> implements Stack<E> {
         Node(E element) {
             this(element, null);
         }
-
 
         Node(E element, Node<E> next) {
             this.item = element;

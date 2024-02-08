@@ -74,8 +74,13 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
     }
 
     public V remove(K key) {
-        Node<K, V> node = remove(root, key);
-        return node != null ? node.value : null;
+        Node<K, V> removeNode = getNode(root, key);
+        if (removeNode != null) {
+            root = remove(root, key);
+            return removeNode.value;
+        } else {
+            return null;
+        }
     }
 
     /**

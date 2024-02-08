@@ -1,9 +1,11 @@
 package cn.com.nadav.algorithm.search.binary;
 
 /**
- * 递归算法 recursion
- * 迭代算法 iteration
- * 二分查找及左边界和右边界查找
+ * BinarySearch is a class that provides recursive and iterative algorithms for binary search, as well as methods for finding the left and right bounds of a target in a sorted array.
+ * The class includes methods for searching in arrays of integers and arrays of objects that implement the Comparable interface.
+ * The leftBound method finds the first occurrence of a target in a sorted array.
+ * The rightBound method finds the last occurrence of a target in a sorted array.
+ * The code also includes helper methods for each algorithm.
  *
  * @author nadav cheung
  * @date 8/16/23
@@ -53,7 +55,14 @@ public class BinarySearch {
         return recursionSearch(array, l, mid, target);
     }
 
-    // Java范型接口
+
+    /**
+     * 二分查找迭代算法
+     *
+     * @param array 数组
+     * @param target   目标数据
+     * @return
+     */
     public static <E extends Comparable<? super E>> int recursionSearch(E[] array, E target) {
         return recursionSearch(array, 0, array.length, target);
     }
@@ -184,7 +193,6 @@ public class BinarySearch {
      *
      * @param nums
      * @param target
-     * @param <E>
      * @return
      */
     private static int findLeftBound(int[] nums, int target) {

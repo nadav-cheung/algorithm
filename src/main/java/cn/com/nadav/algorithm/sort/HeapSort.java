@@ -1,7 +1,5 @@
 package cn.com.nadav.algorithm.sort;
 
-import java.util.Arrays;
-
 public class HeapSort<T extends Comparable<? super T>> {
     private static int leftChild(int k) {
         return (k << 1) + 1;

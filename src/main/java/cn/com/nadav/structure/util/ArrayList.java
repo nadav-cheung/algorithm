@@ -2,6 +2,10 @@ package cn.com.nadav.structure.util;
 
 import java.util.Arrays;
 
+/**
+ * 使用数组实现List数据结构 ArrayList
+ * ArrayList是一个动态数组，它是基于数组实现的，它允许所有元素，包括null。ArrayList中的元素可以是对象引用，也可以是基本数据类型。
+ */
 public class ArrayList<E> implements List<E> {
 
     /**
@@ -32,14 +36,15 @@ public class ArrayList<E> implements List<E> {
 
 
     /**
-     * 已经存放的数据大小
-     *
-     * @serial
+     * 数组大小
      */
     private int size;
 
+
     /**
-     * @param initialCapacity 初始化数组大小
+     * 构造一个指定容量的空列表
+     *
+     * @param initialCapacity 初始容量
      */
     public ArrayList(int initialCapacity) {
         // 直接初始化
@@ -53,15 +58,19 @@ public class ArrayList<E> implements List<E> {
         }
     }
 
+
     /**
-     * 默认初始化
+     * 构造一个空列表
      */
     public ArrayList() {
         this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
 
+
     /**
-     * 计算容量 选择默认容量和所需容量中的较大者
+     * 构造一个包含指定集合的列表
+     *
+     * @param c 集合
      */
     private static int calculateCapacity(Object[] elementData, int minCapacity) {
         if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
