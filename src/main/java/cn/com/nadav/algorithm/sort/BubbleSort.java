@@ -1,4 +1,12 @@
+
 package cn.com.nadav.algorithm.sort;
+
+/**
+ * BubbleSort is a class that provides methods for sorting arrays using the Bubble Sort algorithm.
+ * The bubbleSort method can be used to sort an array of integers in ascending order.
+ * The bubbleSort method can also be used to sort an array of objects that implement the Comparable interface in ascending order.
+ */
+
 
 public class BubbleSort {
 
@@ -10,7 +18,7 @@ public class BubbleSort {
      * 每轮排序选择未排序中最大的元素放在nums[n-i-1]位置
      * 每轮排序结束  nums[n-i-1]位置 元素确认
      *
-     * @param nums 待排序数组
+     * @param nums The array of integers to be sorted.
      */
     public static void bubbleSort(int[] nums) {
         int len = nums.length;

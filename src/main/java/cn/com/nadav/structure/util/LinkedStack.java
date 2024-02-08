@@ -60,6 +60,9 @@ public class LinkedStack<E> implements Stack<E> {
     }
 
 
+    /**
+     * 演示采用递归方法删除元素
+     */
     @Override
     public E pop() {
         if (size == 0) {
@@ -71,6 +74,11 @@ public class LinkedStack<E> implements Stack<E> {
         return e;
     }
 
+
+    /**
+     * 查看栈顶元素，不删除
+     * @return 栈顶元素
+     */
     @Override
     public E peek() {
         if (size == 0) {

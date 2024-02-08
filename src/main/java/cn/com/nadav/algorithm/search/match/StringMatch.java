@@ -1,6 +1,9 @@
 package cn.com.nadav.algorithm.search.match;
 
 /**
+ * This class provides methods for string matching using brute force search and Knuth-Morris-Pratt (KMP) algorithm.
+ * It includes methods to perform brute force search, KMP search, and compute the Longest Proper Prefix which is also Suffix (LPS) array.
+ * The class also contains a method to build the Partial Match Table for the KMP algorithm.
  * @author nadav cheung
  * @date 8/16/23
  */
