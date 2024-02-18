@@ -4,6 +4,13 @@ import java.util.Arrays;
 
 public class PriorityQueue<E> implements Queue<E> {
 
+    /**
+     * The maximum size of array to allocate.
+     * Some VMs reserve some header words in an array.
+     * Attempts to allocate larger arrays may result in
+     * OutOfMemoryError: Requested array size exceeds VM limit
+     */
+
     public static final int SOFT_MAX_ARRAY_LENGTH = Integer.MAX_VALUE - 8;
     private static final int DEFAULT_INITIAL_CAPACITY = 11;
     transient Object[] elements;
