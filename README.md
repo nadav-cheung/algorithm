@@ -38,6 +38,7 @@ brew install openjdk@17
 ```
 git clone https://github.com/nadav-cheung/algorithm.git
 cd algorithm
+mvn clean package
 ```
 
 ### 导入到您的 IDE 中
