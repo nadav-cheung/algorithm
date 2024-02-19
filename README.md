@@ -26,7 +26,7 @@
 
 要构建，您需要安装[Git](https://docs.github.com/en/get-started/quickstart/set-up-git)、 [JDK 17+](https://adoptium.net/)
 
-这里以MacOs为例，展示如何进行安装
+这里以macOS为例，展示如何进行安装
 
 ```bash
 brew install git
