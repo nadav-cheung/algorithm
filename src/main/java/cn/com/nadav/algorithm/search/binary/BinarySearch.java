@@ -59,8 +59,8 @@ public class BinarySearch {
     /**
      * 二分查找迭代算法
      *
-     * @param array 数组
-     * @param target   目标数据
+     * @param array  数组
+     * @param target 目标数据
      * @return
      */
     public static <E extends Comparable<? super E>> int recursionSearch(E[] array, E target) {

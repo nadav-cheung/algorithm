@@ -4,6 +4,14 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * email nadav.cheung@gmail.com
+ * date 2024-02-07 11:05:58
+ * description 使用链表实现数据结构栈
+ *
+ * @author Nadav Cheung
+ * @since 1.0.x
+ */
 public class BinarySearchTree<K extends Comparable<? super K>, V> {
 
     private Node<K, V> root;
@@ -32,6 +40,9 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
      * 向二分搜索树中添加新的元素(key, value)
      */
     public void add(K key, V value) {
+        if (key == null) {
+            throw new NullPointerException("key is null");
+        }
         root = add(root, key, value);
     }
 
@@ -152,38 +163,38 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
         }
     }
 
-//
-//    private Node<K, V> remove(Node<K, V> node, K key) {
-//        if (node == null) {
-//            return null;
-//        }
-//        if (key.compareTo(node.key) < 0) {
-//            node.left = remove(node.left, key);
-//            return node;
-//        } else if (key.compareTo(node.key) > 0) {
-//            node.right = remove(node.right, key);
-//            return node;
-//        } else {
-//            //key.compareTo(node.key) = 0
-//            if (node.left == null) {
-//                Node<K, V> rightNode = node.right;
-//                node.right = null;
-//                size--;
-//                return rightNode;
-//            }
-//            if (node.right == null) {
-//                Node<K, V> leftNode = node.left;
-//                node.left = null;
-//                size--;
-//                return leftNode;
-//            }
-//            Node<K, V> successor = minimum(node.right);
-//            successor.left = node.left;
-//            successor.right = removeMin(node.right);
-//            node.left = node.right = null;
-//            return successor;
-//        }
-//    }
+
+    private Node<K, V> removeV2(Node<K, V> node, K key) {
+        if (node == null) {
+            return null;
+        }
+        if (key.compareTo(node.key) < 0) {
+            node.left = removeV2(node.left, key);
+            return node;
+        } else if (key.compareTo(node.key) > 0) {
+            node.right = removeV2(node.right, key);
+            return node;
+        } else {
+            //key.compareTo(node.key) = 0
+            if (node.left == null) {
+                Node<K, V> rightNode = node.right;
+                node.right = null;
+                size--;
+                return rightNode;
+            }
+            if (node.right == null) {
+                Node<K, V> leftNode = node.left;
+                node.left = null;
+                size--;
+                return leftNode;
+            }
+            Node<K, V> successor = minimum(node.right);
+            successor.left = node.left;
+            successor.right = removeMin(node.right);
+            node.left = node.right = null;
+            return successor;
+        }
+    }
 
 
     /**
@@ -283,7 +294,7 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
         }
     }
 
-    // 使用栈deque实现非递归的前序遍历
+    // 实现非递归的前序遍历
     public void preOrderNR() {
         if (root == null) {
             return;
@@ -302,7 +313,7 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
         }
     }
 
-    // 使用栈deque实现非递归的中序遍历
+    // 实现非递归的中序遍历
     public void inOrderNR() {
         if (root == null) {
             return;
@@ -321,7 +332,7 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
     }
 
 
-    // 使用栈deque实现非递归的后序遍历
+    // 实现非递归的后序遍历
     public void postOrderNR() {
         if (root == null) {
             return;
@@ -361,6 +372,5 @@ public class BinarySearchTree<K extends Comparable<? super K>, V> {
             this(key, value, null, null);
         }
     }
-
 
 }

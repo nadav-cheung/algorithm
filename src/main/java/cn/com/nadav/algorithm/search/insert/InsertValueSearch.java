@@ -2,10 +2,10 @@ package cn.com.nadav.algorithm.search.insert;
 
 /**
  * InsertValueSearch.java
- *
+ * <p>
  * This program implements the Insert Value Search algorithm, which is an advanced version of binary search.
  * It is suitable for searching in data that is evenly distributed.
- *
+ * <p>
  * The main method 'search' performs the insert value search on a given sorted array 'nums' to find the target value.
  * The method 'interpolationSearch' implements the insert value search algorithm recursively.
  * The method 'search' is a helper method that performs boundary checks and calls the 'interpolationSearch' method.
@@ -29,7 +29,7 @@ public class InsertValueSearch {
      * @param low    The lower index of the search range
      * @param high   The upper index of the search range
      * @param target The target value to be searched
-     * @return       The index of the target value in the array, or -1 if not found
+     * @return The index of the target value in the array, or -1 if not found
      */
     public static int interpolationSearch(int[] arr, int low, int high, int target) {
         if (low <= high && target >= arr[low] && target <= arr[high]) {

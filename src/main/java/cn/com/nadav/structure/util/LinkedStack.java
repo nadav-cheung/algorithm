@@ -77,6 +77,7 @@ public class LinkedStack<E> implements Stack<E> {
 
     /**
      * 查看栈顶元素，不删除
+     *
      * @return 栈顶元素
      */
     @Override
